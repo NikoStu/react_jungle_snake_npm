@@ -1,0 +1,1 @@
+This is a simple version of a snake game coded in ReactJS. Have fun :)
