@@ -200,13 +200,15 @@ export default class Snake extends React.Component{
     this.setState({squares});
   };
 
+
+
   render(){
 
     function createElements(obj){
       if(obj.isSnake === true){
         return React.createElement(
           'div',
-          {className: 'square snake'}
+          {className: 'square snake'} 
         );
       } else if (obj.isApple === true){
         return React.createElement(
@@ -226,32 +228,54 @@ export default class Snake extends React.Component{
       this.props.sendGameData(this.state);
     };
 
+    //backgroundimages via props, appear if declared via props in parent
+    let handheldStyle;
+    let gridStyle;
+
+    if (this.props.styles) {
+      handheldStyle = {  
+        backgroundImage: "url(" + this.props.styles.handheldBackgroundImg + ")",
+        backgroundPosition: 'center',
+        backgroundSize: 'cover',
+        backgroundRepeat: 'no-repeat'
+      };
+      gridStyle = {  
+        backgroundImage: "url(" + this.props.styles.playboardBackgroundImg + ")",
+        backgroundPosition: 'center',
+        backgroundSize: 'cover',
+        backgroundRepeat: 'no-repeat'
+      };
+      } else {
+        handheldStyle = {  
+          backgroundColor: "#663300"
+        };
+        gridStyle = {  
+          backgroundColor: "bisque"
+        };
+      };
+
     return (
       <div className="snake__app">
-          <div className="background-container">
-            <div className="handheld-container">
-                <h1>Jungle Snake</h1>
-                <div className="grid">
-                  {this.state.squares.map(createElements)}
-                  <div className={this.state.gameover? "grid_overlay" : "grid_overlay_hidden"}>
-                    <h2> -GAME OVER- </h2>
-                    <h2>Highscore: {this.state.highscore}</h2>
-                    <p>{this.state.newHighscore? "...that's a new highscore!" : "Tipp: You can also use the arrow keys to play"}</p>
-                  </div>
+          <div className="handheld-container" style={handheldStyle}>
+              <h1>Jungle Snake</h1>
+              <div className="grid" style={gridStyle}>
+                {this.state.squares.map(createElements)}
+                <div className={this.state.gameover? "grid_overlay" : "grid_overlay_hidden"}>
+                  <h2> -GAME OVER- </h2>
+                  <h2>Highscore: {this.state.highscore}</h2>
+                  <p>{this.state.newHighscore? "...that's a new highscore!" : "Tipp: You can also use the arrow keys to play"}</p>
                 </div>
-                <div className="control-pad">
-                  <div className="score">Score: {this.state.score < 10? "0": ""}{this.state.score} </div>
-                  <div className="arrow up" onClick={(event) => this.control(event, "up")}></div>
-                  <div className="arrow down" onClick={(event) => this.control(event, "down")}></div>
-                  <div className="arrow left" onClick={(event) => this.control(event, "left")}></div>
-                  <div className="arrow right" onClick={(event) => this.control(event, "right")}></div>
-                  <div className="start-btn" onClick={this.startGame}>Start Game</div>
-                </div>
-            </div>
+              </div>
+              <div className="control-pad">
+                <div className="score">Score: {this.state.score < 10? "0": ""}{this.state.score} </div>
+                <div className="arrow up" onClick={(event) => this.control(event, "up")}></div>
+                <div className="arrow down" onClick={(event) => this.control(event, "down")}></div>
+                <div className="arrow left" onClick={(event) => this.control(event, "left")}></div>
+                <div className="arrow right" onClick={(event) => this.control(event, "right")}></div>
+                <div className="start-btn" onClick={this.startGame}>Start Game</div>
+              </div>
           </div>
       </div>
     );
   };
 };
-
-//{(this.state.gameover && this.state.newHighscore) && <Confetti />}
