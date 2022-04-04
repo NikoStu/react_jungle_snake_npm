@@ -255,7 +255,7 @@ export default class Snake extends React.Component{
       };
 
     return (
-      <div className="snake__app">
+      <div className="snake_app">
           <div className="handheld-container" style={handheldStyle}>
               <h1>Jungle Snake</h1>
               <div className="grid" style={gridStyle}>

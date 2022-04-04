@@ -1,14 +1,25 @@
 @import url('https://fonts.googleapis.com/css2?family=Berkshire+Swash&display=swap');
 
-body {
+.snake_app {
+    box-sizing: border-box;
     margin: 0;
     font-family: 'Berkshire Swash', cursive;
     text-align: center;
     color: antiquewhite;
 }
 
-h1 {
+.snake_app h1 {
+    font-size: 30px;
     margin: 8px;
+}
+
+.snake_app h2 {
+    font-size: 25px;
+    margin: 10px;
+}
+
+.snake_app p {
+    font-size: 18px;
 }
 
 .handheld-container {
