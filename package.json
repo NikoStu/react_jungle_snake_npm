@@ -1,6 +1,6 @@
 {
   "name": "react_jungle_snake",
-  "version": "1.0.2",
+  "version": "1.0.3",
   "description": "snake game react component",
   "main": "dist/index.js",
   "scripts": {
