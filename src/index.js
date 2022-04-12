@@ -10,7 +10,7 @@ export default class Snake extends React.Component{
     
     this.state = {
       gridWidth: 10,
-      snake: [2, 1, 0], 
+      snake: [2, 1, 0], //test
       appleIndex: 0,
       speedIncreaseFactor: 0.95,
       score: 0,
@@ -26,11 +26,11 @@ export default class Snake extends React.Component{
   };
 
   componentDidMount(){
-    window.addEventListener('keyup', this.control);
+    window.addEventListener('keydown', this.control); 
   };
 
   componentWillUnmount(){
-    window.removeEventListener('keyup', this.control);
+    window.removeEventListener('keydown', this.control);
     clearTimeout(this.state.timeoutId);
   };
 
@@ -71,7 +71,7 @@ export default class Snake extends React.Component{
     let newHighscore = this.state.newHighscore;
     let intervalTime = this.state.intervalTime;
     let squares = this.state.squares;
-    snake = [2,1,0];
+    snake = [2, 1, 0];
     score = 0;
     direction = 1;
     gameover = false;
@@ -121,14 +121,18 @@ export default class Snake extends React.Component{
     let gridWidth = this.state.gridWidth;
     let direction = this.state.direction;
     let snake = this.state.snake;
-    if ((e.keyCode === 39 || button === "right") && direction !== -1 && snake[0] - direction === snake[1]) { 
+    if ((e.keyCode === 39 || button === "right") && this.state.gameIsOn && direction !== -1 && snake[0] - direction === snake[1]) { 
         this.setState({direction: 1});
-    } else if ((e.keyCode === 38 || button === "up") && direction !== gridWidth && snake[0] - direction === snake[1]) {
+        e.preventDefault();
+    } else if ((e.keyCode === 38 || button === "up") && this.state.gameIsOn && direction !== gridWidth && snake[0] - direction === snake[1]) {
         this.setState({direction: -gridWidth});
-    } else if ((e.keyCode === 37 || button === "left") && direction !== 1 && snake[0] - direction === snake[1]) {
+        e.preventDefault();
+    } else if ((e.keyCode === 37 || button === "left") && this.state.gameIsOn && direction !== 1 && snake[0] - direction === snake[1]) {
         this.setState({direction: -1});
-    } else if ((e.keyCode === 40 || button === "down") && direction !== -gridWidth && snake[0] - direction === snake[1]) {
+        e.preventDefault();
+    } else if ((e.keyCode === 40 || button === "down") && this.state.gameIsOn && direction !== -gridWidth && snake[0] - direction === snake[1]) {
         this.setState({direction: gridWidth});
+        e.preventDefault();
     };
   };
 
@@ -138,6 +142,7 @@ export default class Snake extends React.Component{
     let direction = this.state.direction;
     let squares = this.state.squares;
     let gameover = this.state.gameover;
+    let gameIsOn = this.state.gameIsOn;
     let score = this.state.score;
     let highscore = this.state.highscore;
     let newHighscore = this.state.newHighscore;
@@ -152,6 +157,7 @@ export default class Snake extends React.Component{
         squares[snake[0] + direction].isSnake //if snake eats itself
     ) {
         gameover = true;
+        gameIsOn = false;
     } else {
       //remove last item from snake and store it for growing
       const tail = snake.pop();
@@ -178,6 +184,7 @@ export default class Snake extends React.Component{
     this.setState({
       snake,
       gameover,
+      gameIsOn,
       score,
       highscore,
       newHighscore,
